@@ -24,7 +24,8 @@ var Items: Item[] = [
 var PantryItems: PantryItem[] = [
     {
         ...Items[0],
-        quantity: 16
+        quantity: 16,
+        expiration: new Date()
     },
     {
         ...Items[1],

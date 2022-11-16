@@ -13,6 +13,8 @@ type PantryItemViewProps = StackNavigationProp<RootStackParamList, 'PantryItemVi
 export default function PantryItemView(props: PantryItem) {
     const navigation = useNavigation<PantryItemViewProps>();
 
+    const formattedDate = props.expiration?.getMonth() + "/" + props.expiration?.getFullYear()
+
     return (
         <TouchableHighlight 
             onPress={() => navigation.navigate('ItemView',
@@ -26,7 +28,13 @@ export default function PantryItemView(props: PantryItem) {
             <View style={styles.item}>
                 <Text style={styles.label}>{props.name}</Text>
                 <View style={styles.sublabel}>
-                    <Text>{props.quantity} {props.units}</Text>
+                    <Text style={styles.qtySpacing}>Qty: {props.quantity}</Text>
+                    <Text style={styles.unitsSpacing}>Units: {props.units}</Text>
+                    <Text style={styles.expSpacing}>
+                        {props.expiration ? 
+                            `Exp: ${formattedDate}` :
+                            null}
+                    </Text>
                 </View>
             </View>
         </TouchableHighlight>
@@ -36,14 +44,27 @@ export default function PantryItemView(props: PantryItem) {
 const styles = StyleSheet.create({
     item: {
         padding: Paddings.Standard,
-        borderBottomWidth: 1
+        borderBottomColor: Colors.Gray,
+        borderBottomWidth: 1,
     },
     label: {
-        fontSize: FontSizes.Label
+        fontSize: FontSizes.Label,
     },
     sublabel: {
         flexDirection: "row",
+    },
+    qtySpacing: {
+        flex: .25,
         fontSize: FontSizes.Sublabel
     },
+    unitsSpacing: {
+        flex: .45,
+        fontSize: FontSizes.Sublabel
+    },
+    expSpacing: {
+        flex: .3,
+        textAlign: 'right',
+        fontSize: FontSizes.Sublabel
+    }
 })
 

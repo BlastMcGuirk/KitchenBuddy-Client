@@ -65,7 +65,8 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                         id={item.id} 
                         name={item.name} 
                         quantity={item.quantity} 
-                        units={item.units} /> 
+                        units={item.units}
+                        expiration={item.expiration} /> 
                 ))
             }
             </ScrollView>
