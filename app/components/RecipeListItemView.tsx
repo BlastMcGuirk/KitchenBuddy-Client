@@ -7,17 +7,18 @@ import { PantryItem } from '../dto/PantryItem';
 import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
+import { Recipe } from '../dto/Recipe';
 
-type PantryItemViewProps = StackNavigationProp<RootStackParamList, 'PantryItemView'>;
+type RecipeListViewProps = StackNavigationProp<RootStackParamList, 'PantryItemView'>;
 
-export default function PantryItemView(props: PantryItem) {
-    const navigation = useNavigation<PantryItemViewProps>();
+export default function RecipeListItemView(props: Recipe) {
+    const navigation = useNavigation<RecipeListViewProps>();
 
     return (
         <TouchableHighlight 
             onPress={() => navigation.navigate('ItemView',
                 {
-                    id: props.id
+                    id: props.recipeId
                 }
             )} 
             onLongPress={() => console.log("Long")} 
@@ -25,9 +26,6 @@ export default function PantryItemView(props: PantryItem) {
         >
             <View style={styles.item}>
                 <Text style={styles.label}>{props.name}</Text>
-                <View style={styles.sublabel}>
-                    <Text>{props.quantity} {props.units}</Text>
-                </View>
             </View>
         </TouchableHighlight>
     )

@@ -1,32 +1,31 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
-import PantryItemView from '../components/PantryItemView';
+import RecipeListItemView from '../components/RecipeListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
-import { GetPantryItems } from '../data/FakeData';
+import { GetRecipes } from '../data/FakeData';
+import { Recipe } from '../dto/Recipe';
 
-type PantryViewProps = NativeStackScreenProps<RootStackParamList, 'PantryView'>;
+type RecipesViewProps = NativeStackScreenProps<RootStackParamList, 'RecipesView'>;
 
-export default function PantryView(props: PantryViewProps): ReactElement {
+export default function RecipesView(props: RecipesViewProps): ReactElement {
     const [loading, setLoading] = useState(true);
-    const [items, setItems] = useState<any[]>([]);
-    const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
 
     useEffect(() => {
         setLoading(true);
         //fetch("https://localhost:7044/Items/Pantry")
         //.then(res => res.json())
-        GetPantryItems()
+        GetRecipes()
         .then(data => {
-            setItems(data);
+            setRecipes(data);
             setLoading(false);
         });
     }, []);
 
-    useEffect(() => {
+    /*useEffect(() => {
         props.navigation.setOptions({
             headerTitle: 'Kitchen Buddy',
             headerRight: () => (
@@ -39,7 +38,7 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                     }} />
             )
         })
-    }, [props.navigation])
+    }, [props.navigation])*/
 
     return (
         <>
@@ -50,22 +49,11 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                     </View>
                 )}
                 {!loading &&
-                items.map(item => (
-                    <PantryItemView 
-                        key={item.id} 
-                        id={item.id} 
-                        name={item.name} 
-                        quantity={item.quantity} 
-                        units={item.units} /> 
+                recipes.map(recipe => (
+                    <RecipeListItemView key={recipe.recipeId} recipeId={recipe.recipeId} name={recipe.name} /> 
                 ))
             }
             </ScrollView>
-            {headerMenuShowing && 
-                <View style={styles.headerMenu}>
-                    <Text style={styles.headerOption}>Add Food</Text>
-                    <Text style={styles.headerOption}>Second</Text>
-                </View>
-            }
         </>
     )
 }

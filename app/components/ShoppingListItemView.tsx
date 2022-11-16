@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
+import CheckBox from '@react-native-community/checkbox';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../App';
 import { useNavigation } from '@react-navigation/native';
-import { PantryItem } from '../dto/PantryItem';
 import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
+import { ShoppingItem } from '../dto/ShoppingItem';
 
-type PantryItemViewProps = StackNavigationProp<RootStackParamList, 'PantryItemView'>;
+type ShoppingListViewProps = StackNavigationProp<RootStackParamList, 'ShoppingListItemView'>;
 
-export default function PantryItemView(props: PantryItem) {
-    const navigation = useNavigation<PantryItemViewProps>();
+export default function ShoppingListItemView(props: ShoppingItem) {
+    const navigation = useNavigation<ShoppingListViewProps>();
+    const [checked, setChecked] = useState(false);
 
     return (
         <TouchableHighlight 
@@ -24,10 +26,11 @@ export default function PantryItemView(props: PantryItem) {
             underlayColor={Colors.OffWhite}
         >
             <View style={styles.item}>
+                <CheckBox 
+                    disabled={false}
+                    value={checked}
+                    onValueChange={setChecked} />
                 <Text style={styles.label}>{props.name}</Text>
-                <View style={styles.sublabel}>
-                    <Text>{props.quantity} {props.units}</Text>
-                </View>
             </View>
         </TouchableHighlight>
     )

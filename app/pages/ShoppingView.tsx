@@ -1,32 +1,32 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
-import PantryItemView from '../components/PantryItemView';
+import RecipeListItemView from '../components/RecipeListItemView';
+import ShoppingListItemView from '../components/ShoppingListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
-import { GetPantryItems } from '../data/FakeData';
+import { GetRecipes, GetShoppingItems } from '../data/FakeData';
+import { ShoppingItem } from '../dto/ShoppingItem';
 
-type PantryViewProps = NativeStackScreenProps<RootStackParamList, 'PantryView'>;
+type ShoppingViewProps = NativeStackScreenProps<RootStackParamList, 'ShoppingView'>;
 
-export default function PantryView(props: PantryViewProps): ReactElement {
+export default function ShoppingView(props: ShoppingViewProps): ReactElement {
     const [loading, setLoading] = useState(true);
-    const [items, setItems] = useState<any[]>([]);
-    const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
+    const [shoppingItems, setShoppingItems] = useState<ShoppingItem[]>([]);
 
     useEffect(() => {
         setLoading(true);
         //fetch("https://localhost:7044/Items/Pantry")
         //.then(res => res.json())
-        GetPantryItems()
+        GetShoppingItems()
         .then(data => {
-            setItems(data);
+            setShoppingItems(data);
             setLoading(false);
         });
     }, []);
 
-    useEffect(() => {
+    /*useEffect(() => {
         props.navigation.setOptions({
             headerTitle: 'Kitchen Buddy',
             headerRight: () => (
@@ -39,7 +39,7 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                     }} />
             )
         })
-    }, [props.navigation])
+    }, [props.navigation])*/
 
     return (
         <>
@@ -50,22 +50,17 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                     </View>
                 )}
                 {!loading &&
-                items.map(item => (
-                    <PantryItemView 
-                        key={item.id} 
-                        id={item.id} 
-                        name={item.name} 
-                        quantity={item.quantity} 
-                        units={item.units} /> 
+                shoppingItems.map(shoppingItem => (
+                    <ShoppingListItemView 
+                        key={shoppingItem.id} 
+                        id={shoppingItem.id} 
+                        name={shoppingItem.name}
+                        isChecked={shoppingItem.isChecked}
+                        quantity={shoppingItem.quantity}
+                        units={shoppingItem.units} /> 
                 ))
             }
             </ScrollView>
-            {headerMenuShowing && 
-                <View style={styles.headerMenu}>
-                    <Text style={styles.headerOption}>Add Food</Text>
-                    <Text style={styles.headerOption}>Second</Text>
-                </View>
-            }
         </>
     )
 }

@@ -2,35 +2,26 @@ import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { RootStackParamList } from '../../App';
-import { PantryItem } from '../dto/PantryItem';
-import { GetPantryItem } from '../data/FakeData';
+import { GetPantryItem, GetRecipe } from '../data/FakeData';
 import PageLayout from '../layouts/PageLayout';
+import { Recipe } from '../dto/Recipe';
 
-type ItemViewProps = NativeStackScreenProps<RootStackParamList, 'ItemView'>;
+type RecipeViewProps = NativeStackScreenProps<RootStackParamList, 'RecipeView'>;
 
-export default function ItemView({ route, navigation }: ItemViewProps): ReactElement {
+export default function RecipeView({ route, navigation }: RecipeViewProps): ReactElement {
     const [loading, setLoading] = useState(false);
-    const [item, setItem] = useState<PantryItem>();
+    const [recipe, setRecipe] = useState<Recipe>();
 
     useEffect(() => {
         setLoading(true);
         //fetch("https://localhost:7044/Items/" + route.params.id + "/Pantry")
         //.then(res => res.json())
-        GetPantryItem(route.params.id)
+        GetRecipe(route.params.id)
         .then(data => {
-            setItem(data);
+            setRecipe(data);
             setLoading(false);
         });
     }, []);
-
-    function displayLine(label: string, value: any) {
-        return (
-            <View style={styles.itemRow}>
-                <Text>{label}</Text>
-                <Text>{value}</Text>
-            </View>
-        )
-    }
 
     if (loading) {
         return (
@@ -40,19 +31,17 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
         )
     }
 
-    if (!item) {
+    if (!recipe) {
         return (
             <PageLayout>
-                <Text>Item not found.</Text>
+                <Text>Recipe not found.</Text>
             </PageLayout>
         )
     }
 
     return (
         <PageLayout>
-            <Text>{item.name}</Text>
-            {displayLine("Units", item.units)}
-            {displayLine("Quantity", item.quantity)}
+            <Text>{recipe.name}</Text>
         </PageLayout>
     )
 }
@@ -61,5 +50,4 @@ const styles = StyleSheet.create({
     itemRow: {
         flexDirection: 'row',
     },
-
 });
