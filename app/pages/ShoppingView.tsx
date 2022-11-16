@@ -1,12 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
-import RecipeListItemView from '../components/RecipeListItemView';
 import ShoppingListItemView from '../components/ShoppingListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
-import { GetRecipes, GetShoppingItems } from '../data/FakeData';
+import { GetShoppingItems } from '../data/FakeData';
 import { ShoppingItem } from '../dto/ShoppingItem';
 
 type ShoppingViewProps = NativeStackScreenProps<RootStackParamList, 'ShoppingView'>;
@@ -14,6 +14,7 @@ type ShoppingViewProps = NativeStackScreenProps<RootStackParamList, 'ShoppingVie
 export default function ShoppingView(props: ShoppingViewProps): ReactElement {
     const [loading, setLoading] = useState(true);
     const [shoppingItems, setShoppingItems] = useState<ShoppingItem[]>([]);
+    const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -26,20 +27,29 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
         });
     }, []);
 
-    /*useEffect(() => {
+    useEffect(() => {
         props.navigation.setOptions({
-            headerTitle: 'Kitchen Buddy',
+            headerTitle: 'SHOPPING',
             headerRight: () => (
-                <Icon 
-                    name="more-vert" 
-                    color={Colors.White} 
-                    size={FontSizes.Header} 
-                    onPress={() => {
-                        setHeaderMenuShowing(prev => !prev);
-                    }} />
-            )
+                <View style={{marginRight: 10}}>
+                    <Icon 
+                        name="more-vert" 
+                        color={Colors.Black} 
+                        size={FontSizes.Header} 
+                        onPress={() => {
+                            setHeaderMenuShowing(prev => !prev);
+                        }} />
+                </View>
+            ),
+            headerTintColor: Colors.Black,
+            headerStyle: {
+                backgroundColor: Colors.Primary
+            },
+            headerTitleStyle: {
+                fontSize: FontSizes.Header
+            }
         })
-    }, [props.navigation])*/
+    }, [props.navigation])
 
     return (
         <>
@@ -61,13 +71,19 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
                 ))
             }
             </ScrollView>
+            {headerMenuShowing && 
+                <View style={styles.headerMenu}>
+                    <Text style={styles.headerOption}>Add Food</Text>
+                    <Text style={styles.headerOption}>Second</Text>
+                </View>
+            }
         </>
     )
 }
 
 const styles = StyleSheet.create({
     pantry: {
-        backgroundColor: Colors.White
+        backgroundColor: Colors.Background
     },
     headerMenu: {
         position: 'absolute',

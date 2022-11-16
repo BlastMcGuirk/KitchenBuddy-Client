@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
-import CheckBox from '@react-native-community/checkbox';
+import CheckBox from 'expo-checkbox';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../App';
 import { useNavigation } from '@react-navigation/native';

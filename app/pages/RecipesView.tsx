@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
 import RecipeListItemView from '../components/RecipeListItemView';
 import { Colors } from '../constants/Colors';
@@ -13,6 +14,7 @@ type RecipesViewProps = NativeStackScreenProps<RootStackParamList, 'RecipesView'
 export default function RecipesView(props: RecipesViewProps): ReactElement {
     const [loading, setLoading] = useState(true);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -25,20 +27,29 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
         });
     }, []);
 
-    /*useEffect(() => {
+    useEffect(() => {
         props.navigation.setOptions({
-            headerTitle: 'Kitchen Buddy',
+            headerTitle: 'RECIPES',
             headerRight: () => (
-                <Icon 
-                    name="more-vert" 
-                    color={Colors.White} 
-                    size={FontSizes.Header} 
-                    onPress={() => {
-                        setHeaderMenuShowing(prev => !prev);
-                    }} />
-            )
+                <View style={{marginRight: 10}}>
+                    <Icon 
+                        name="more-vert" 
+                        color={Colors.Black} 
+                        size={FontSizes.Header} 
+                        onPress={() => {
+                            setHeaderMenuShowing(prev => !prev);
+                        }} />
+                </View>
+            ),
+            headerTintColor: Colors.Black,
+            headerStyle: {
+                backgroundColor: Colors.Primary
+            },
+            headerTitleStyle: {
+                fontSize: FontSizes.Header
+            }
         })
-    }, [props.navigation])*/
+    }, [props.navigation])
 
     return (
         <>
@@ -54,13 +65,19 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                 ))
             }
             </ScrollView>
+            {headerMenuShowing && 
+                <View style={styles.headerMenu}>
+                    <Text style={styles.headerOption}>Add Food</Text>
+                    <Text style={styles.headerOption}>Second</Text>
+                </View>
+            }
         </>
     )
 }
 
 const styles = StyleSheet.create({
     pantry: {
-        backgroundColor: Colors.White
+        backgroundColor: Colors.Background
     },
     headerMenu: {
         position: 'absolute',

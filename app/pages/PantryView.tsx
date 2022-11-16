@@ -28,16 +28,25 @@ export default function PantryView(props: PantryViewProps): ReactElement {
 
     useEffect(() => {
         props.navigation.setOptions({
-            headerTitle: 'Kitchen Buddy',
+            headerTitle: 'PANTRY',
             headerRight: () => (
-                <Icon 
-                    name="more-vert" 
-                    color={Colors.White} 
-                    size={FontSizes.Header} 
-                    onPress={() => {
-                        setHeaderMenuShowing(prev => !prev);
-                    }} />
-            )
+                <View style={{marginRight: 10}}>
+                    <Icon 
+                        name="more-vert" 
+                        color={Colors.Black} 
+                        size={FontSizes.Header} 
+                        onPress={() => {
+                            setHeaderMenuShowing(prev => !prev);
+                        }} />
+                </View>
+            ),
+            headerTintColor: Colors.Black,
+            headerStyle: {
+                backgroundColor: Colors.Primary
+            },
+            headerTitleStyle: {
+                fontSize: FontSizes.Header
+            }
         })
     }, [props.navigation])
 
@@ -72,7 +81,7 @@ export default function PantryView(props: PantryViewProps): ReactElement {
 
 const styles = StyleSheet.create({
     pantry: {
-        backgroundColor: Colors.White
+        backgroundColor: Colors.Background
     },
     headerMenu: {
         position: 'absolute',

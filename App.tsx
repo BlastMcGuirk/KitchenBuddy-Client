@@ -1,9 +1,9 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Button, Platform, StatusBar, StyleSheet } from 'react-native';
-import PantryView from './app/pages/PantryView';
+import { Platform, StatusBar, StyleSheet } from 'react-native';
 import ItemView from './app/pages/ItemView';
 import { Colors } from './app/constants/Colors';
+import { Home } from './app/pages/Home';
 
 const Stack = createNativeStackNavigator();
 
@@ -11,9 +11,9 @@ export type RootStackParamList = {
   PantryView: {},
   RecipesView: {},
   ShoppingView: {},
-  PantryItemView: undefined,
-  RecipeListItemView: undefined,
-  ShoppingListItemView: undefined,
+  PantryItemView: {},
+  RecipeListItemView: {},
+  ShoppingListItemView: {},
   ItemView: {id: number},
   RecipeView: {id: number}
 }
@@ -27,17 +27,15 @@ export default function App() {
               backgroundColor: Colors.Primary
             },
             headerTintColor: Colors.White,
+            contentStyle: { backgroundColor: Colors.Background }
           }}
         >
           <Stack.Screen
-            name="Pantry"
-            component={PantryView}
-            options={({navigation, route}) => ({
-              headerTitle: 'Kitchen Buddy',
-              headerRight: () => (
-                <Button onPress={() => {}} title='Add' />
-              )
-            })}
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false
+            }}
           />
           <Stack.Screen 
             name="ItemView" 
