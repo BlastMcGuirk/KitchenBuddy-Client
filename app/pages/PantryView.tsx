@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SearchBar } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
 import PantryItemView from '../components/PantryItemView';
@@ -14,6 +15,7 @@ export default function PantryView(props: PantryViewProps): ReactElement {
     const [loading, setLoading] = useState(true);
     const [items, setItems] = useState<any[]>([]);
     const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
+    const [filter, setFilter] = useState('');
 
     useEffect(() => {
         setLoading(true);
@@ -52,6 +54,14 @@ export default function PantryView(props: PantryViewProps): ReactElement {
 
     return (
         <>
+            <SearchBar
+                placeholder='Search for food...'
+                value={filter}
+                onChangeText={setFilter}
+                containerStyle={{
+                    backgroundColor: Colors.Background,
+                }}
+                lightTheme={true} />
             <ScrollView style={styles.pantry}>
                 {loading && (
                     <View>
@@ -59,7 +69,10 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                     </View>
                 )}
                 {!loading &&
-                items.map(item => (
+                items.filter(item => {
+                    if (filter === "") return true;
+                    return item.name.includes(filter);
+                }).map(item => (
                     <PantryItemView 
                         key={item.id} 
                         id={item.id} 
