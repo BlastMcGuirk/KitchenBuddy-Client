@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../App';
 import { useNavigation } from '@react-navigation/native';
-import { PantryItem } from '../dto/PantryItem';
 import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
@@ -13,7 +12,7 @@ type RecipeListViewProps = StackNavigationProp<RootStackParamList, 'PantryItemVi
 
 export default function RecipeListItemView(props: Recipe) {
     const navigation = useNavigation<RecipeListViewProps>();
-
+    
     return (
         <TouchableHighlight 
             onPress={() => navigation.navigate('ItemView',
@@ -26,6 +25,11 @@ export default function RecipeListItemView(props: Recipe) {
         >
             <View style={styles.item}>
                 <Text style={styles.label}>{props.name}</Text>
+                <View style={styles.row}>
+                    <Text style={styles.sublabel}>Prep: {props.prepTime}</Text>
+                    <Text style={[styles.sublabel, styles.leftPadding]}>Cook: {props.cookTime}</Text>
+                </View>
+                <Text style={styles.sublabel}>Tags: {props.ingredients.map(ingredient => ingredient.name).join(', ')}</Text>
             </View>
         </TouchableHighlight>
     )
@@ -34,14 +38,22 @@ export default function RecipeListItemView(props: Recipe) {
 const styles = StyleSheet.create({
     item: {
         padding: Paddings.Standard,
-        borderBottomWidth: 1
+        paddingVertical: Paddings.Narrow
+    },
+    row: {
+        flexDirection: 'row'
     },
     label: {
-        fontSize: FontSizes.Label
+        fontSize: FontSizes.Recipe,
+        paddingBottom: Paddings.Narrow
     },
     sublabel: {
         flexDirection: "row",
-        fontSize: FontSizes.Sublabel
+        fontSize: FontSizes.RecipeSmall,
+        paddingBottom: Paddings.Narrow
     },
+    leftPadding: {
+        paddingLeft: Paddings.Wide
+    }
 })
 

@@ -40,11 +40,35 @@ var PantryItems: PantryItem[] = [
 var Recipes: Recipe[] = [
     {
         recipeId: 1,
-        name: 'Chicken Pasta'
+        name: 'Chicken Pasta',
+        cookTime: 10,
+        prepTime: 15,
+        ingredients: [
+            {
+                ...Items[0],
+                quantity: 1
+            },
+            {
+                ...Items[1],
+                quantity: 2
+            }
+        ]
     },
     {
         recipeId: 2,
-        name: 'Chickpea Pasta'
+        name: 'Chickpea Pasta',
+        cookTime: 10,
+        prepTime: 15,
+        ingredients: [
+            {
+                ...Items[2],
+                quantity: 1
+            },
+            {
+                ...Items[1],
+                quantity: 2
+            }
+        ]
     }
 ]
 

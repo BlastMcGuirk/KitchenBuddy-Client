@@ -61,7 +61,13 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                 )}
                 {!loading &&
                 recipes.map(recipe => (
-                    <RecipeListItemView key={recipe.recipeId} recipeId={recipe.recipeId} name={recipe.name} /> 
+                    <RecipeListItemView 
+                        key={recipe.recipeId}
+                        recipeId={recipe.recipeId}
+                        name={recipe.name}
+                        prepTime={recipe.prepTime}
+                        cookTime={recipe.cookTime}
+                        ingredients={recipe.ingredients} /> 
                 ))
             }
             </ScrollView>
