@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SearchBar } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
 import RecipeListItemView from '../components/RecipeListItemView';
@@ -15,6 +16,7 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
     const [loading, setLoading] = useState(true);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
+    const [filter, setFilter] = useState('');
 
     useEffect(() => {
         setLoading(true);
@@ -53,6 +55,14 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
 
     return (
         <>
+            <SearchBar
+                placeholder='Search for food...'
+                value={filter}
+                onChangeText={setFilter}
+                containerStyle={{
+                    backgroundColor: Colors.Background,
+                }}
+                lightTheme={true} />
             <ScrollView style={styles.pantry}>
                 {loading && (
                     <View>
@@ -60,7 +70,10 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                     </View>
                 )}
                 {!loading &&
-                recipes.map(recipe => (
+                recipes.filter(recipe => {
+                    if (filter === "") return true;
+                    return recipe.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+                }).map(recipe => (
                     <RecipeListItemView 
                         key={recipe.recipeId}
                         recipeId={recipe.recipeId}

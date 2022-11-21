@@ -71,7 +71,7 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                 {!loading &&
                 items.filter(item => {
                     if (filter === "") return true;
-                    return item.name.includes(filter);
+                    return item.name.toLowerCase().includes(filter.toLocaleLowerCase());
                 }).map(item => (
                     <PantryItemView 
                         key={item.id} 
