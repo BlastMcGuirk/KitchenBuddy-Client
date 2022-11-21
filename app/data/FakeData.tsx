@@ -51,7 +51,7 @@ var Recipes: Recipe[] = [
 var ShoppingItems: ShoppingItem[] = [
     {
         ...Items[1],
-        quantity: 2,
+        quantity: 222,
         isChecked: true
     },
     {
