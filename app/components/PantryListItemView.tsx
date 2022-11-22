@@ -9,12 +9,16 @@ import { Paddings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
 import { MonthYear } from '../utils/DateFormatter';
 
+// Get props from the stack nav props
 type PantryItemViewProps = StackNavigationProp<RootStackParamList, 'PantryItemView'>;
 
-export default function PantryItemView(props: PantryItem) {
+/**
+ * A view that displays a line in the pantry list
+ * @param props Props for the view
+ * @returns The Pantry Item view
+ */
+export default function PantryListItemView(props: PantryItem) {
     const navigation = useNavigation<PantryItemViewProps>();
-
-    const formattedDate = props.expiration ? MonthYear(props.expiration) : null;
 
     return (
         <TouchableHighlight 
@@ -33,7 +37,7 @@ export default function PantryItemView(props: PantryItem) {
                     <Text style={styles.unitsSpacing}>Units: {props.units}</Text>
                     <Text style={styles.expSpacing}>
                         {props.expiration ? 
-                            `Exp: ${formattedDate}` :
+                            `Exp: ${MonthYear(props.expiration)}` :
                             null}
                     </Text>
                 </View>

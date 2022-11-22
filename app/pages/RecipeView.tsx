@@ -7,13 +7,24 @@ import PageLayout from '../layouts/PageLayout';
 import { Recipe } from '../dto/Recipe';
 import { Paddings } from '../constants/Spacings';
 import { FontSizes } from '../constants/FontSizes';
+import { Loading } from '../components/LoadingView';
+import { NotFound } from '../components/NotFoundView';
 
+// Get props from the stack nav props
 type RecipeViewProps = NativeStackScreenProps<RootStackParamList, 'RecipeView'>;
 
+/**
+ * A view that displays all the data about a recipe
+ * @param props Props for the view
+ * @returns The view
+ */
 export default function RecipeView({ route, navigation }: RecipeViewProps): ReactElement {
+    // Whether or not the data is loading
     const [loading, setLoading] = useState(false);
+    // The recipe data
     const [recipe, setRecipe] = useState<Recipe>();
 
+    // Fetch the data
     useEffect(() => {
         setLoading(true);
         //fetch("https://localhost:7044/Items/" + route.params.id + "/Pantry")
@@ -25,21 +36,8 @@ export default function RecipeView({ route, navigation }: RecipeViewProps): Reac
         });
     }, []);
 
-    if (loading) {
-        return (
-            <PageLayout>
-                <Text>Loading...</Text>
-            </PageLayout>
-        )
-    }
-
-    if (!recipe) {
-        return (
-            <PageLayout>
-                <Text>Recipe not found.</Text>
-            </PageLayout>
-        )
-    }
+    if (loading) return <Loading />
+    if (!recipe) return <NotFound />
 
     return (
         <PageLayout>

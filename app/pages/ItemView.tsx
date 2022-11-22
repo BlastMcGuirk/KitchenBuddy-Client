@@ -8,13 +8,24 @@ import PageLayout from '../layouts/PageLayout';
 import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
 import { MonthYear } from '../utils/DateFormatter';
+import { Loading } from '../components/LoadingView';
+import { NotFound } from '../components/NotFoundView';
 
+// Get props from the stack nav props
 type ItemViewProps = NativeStackScreenProps<RootStackParamList, 'ItemView'>;
 
+/**
+ * A view that displays all the data about an item
+ * @param props Props for the view
+ * @returns The view
+ */
 export default function ItemView({ route, navigation }: ItemViewProps): ReactElement {
+    // Whether or not the data is loading
     const [loading, setLoading] = useState(false);
+    // The item data
     const [item, setItem] = useState<PantryItem>();
 
+    // Fetch the data
     useEffect(() => {
         setLoading(true);
         //fetch("https://localhost:7044/Items/" + route.params.id + "/Pantry")
@@ -26,21 +37,8 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
         });
     }, []);
 
-    if (loading) {
-        return (
-            <PageLayout>
-                <Text>Loading...</Text>
-            </PageLayout>
-        )
-    }
-
-    if (!item) {
-        return (
-            <PageLayout>
-                <Text>Item not found.</Text>
-            </PageLayout>
-        )
-    }
+    if (loading) return <Loading />
+    if (!item) return <NotFound />
 
     return (
         <PageLayout>

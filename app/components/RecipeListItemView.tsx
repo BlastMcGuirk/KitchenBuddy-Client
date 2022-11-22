@@ -8,8 +8,14 @@ import { Paddings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
 import { Recipe } from '../dto/Recipe';
 
+// Get props from the stack nav props
 type RecipeListViewProps = StackNavigationProp<RootStackParamList, 'RecipeListItemView'>;
 
+/**
+ * A view that displays a line in the recipes list
+ * @param props Props for the view
+ * @returns The view
+ */
 export default function RecipeListItemView(props: Recipe) {
     const navigation = useNavigation<RecipeListViewProps>();
     

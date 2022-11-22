@@ -4,6 +4,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
+import { Loading } from '../components/LoadingView';
 import ShoppingListItemView from '../components/ShoppingListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
@@ -11,14 +12,23 @@ import { Paddings } from '../constants/Spacings';
 import { GetShoppingItems } from '../data/FakeData';
 import { ShoppingItem } from '../dto/ShoppingItem';
 
+// Get props from the stack nav props
 type ShoppingViewProps = NativeStackScreenProps<RootStackParamList, 'ShoppingView'>;
 
+/**
+ * A view that displays the shopping list items
+ * @param props Props for the view
+ * @returns The view
+ */
 export default function ShoppingView(props: ShoppingViewProps): ReactElement {
+    // Whether or not the data is loading
     const [loading, setLoading] = useState(true);
+    // The shopping items data
     const [shoppingItems, setShoppingItems] = useState<ShoppingItem[]>([]);
+    // Whether or not the header menu is showing
     const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
-    const [allChecked, setAllChecked] = useState(false);
 
+    // Fetch the data
     useEffect(() => {
         setLoading(true);
         //fetch("https://localhost:7044/Items/Pantry")
@@ -30,6 +40,7 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
         });
     }, []);
 
+    // Set the menu options
     useEffect(() => {
         props.navigation.setOptions({
             headerTitle: 'SHOPPING',
@@ -54,6 +65,8 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
         })
     }, [props.navigation])
 
+    if (loading) return <Loading />
+
     return (
         <>
             <ScrollView style={styles.pantry}>
@@ -64,13 +77,7 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
                     <Text style={styles.labelQuantity}>Qty</Text>
                     <Text style={styles.labelUnits}>Units</Text>
                 </View>
-                {loading && (
-                    <View>
-                        <Text>Loading...</Text>
-                    </View>
-                )}
-                {!loading &&
-                shoppingItems.map(shoppingItem => (
+                {shoppingItems.map(shoppingItem => (
                     <ShoppingListItemView 
                         key={shoppingItem.id} 
                         id={shoppingItem.id} 
@@ -78,8 +85,7 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
                         isChecked={shoppingItem.isChecked}
                         quantity={shoppingItem.quantity}
                         units={shoppingItem.units} /> 
-                ))
-            }
+                ))}
             </ScrollView>
             {headerMenuShowing && 
                 <View style={styles.headerMenu}>

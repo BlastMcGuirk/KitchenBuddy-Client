@@ -9,15 +9,27 @@ import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
 import { GetRecipes } from '../data/FakeData';
 import { Recipe } from '../dto/Recipe';
+import { Loading } from '../components/LoadingView';
 
+// Get props from the stack nav props
 type RecipesViewProps = NativeStackScreenProps<RootStackParamList, 'RecipesView'>;
 
+/**
+ * A view that displays the recipes
+ * @param props Props for the view
+ * @returns The view
+ */
 export default function RecipesView(props: RecipesViewProps): ReactElement {
+    // Whether or not the data is loading
     const [loading, setLoading] = useState(true);
+    // The recipes data
     const [recipes, setRecipes] = useState<Recipe[]>([]);
+    // Whether or not the header menu is showing
     const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
+    // The filter text
     const [filter, setFilter] = useState('');
 
+    // Fetch the data
     useEffect(() => {
         setLoading(true);
         //fetch("https://localhost:7044/Items/Pantry")
@@ -29,6 +41,7 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
         });
     }, []);
 
+    // Set the menu options
     useEffect(() => {
         props.navigation.setOptions({
             headerTitle: 'RECIPES',
@@ -53,6 +66,8 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
         })
     }, [props.navigation])
 
+    if (loading) return <Loading />
+
     return (
         <>
             <SearchBar
@@ -64,13 +79,7 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                 }}
                 lightTheme={true} />
             <ScrollView style={styles.pantry}>
-                {loading && (
-                    <View>
-                        <Text>Loading...</Text>
-                    </View>
-                )}
-                {!loading &&
-                recipes.filter(recipe => {
+                {recipes.filter(recipe => {
                     if (filter === "") return true;
                     return recipe.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
                 }).map(recipe => (
@@ -81,8 +90,7 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                         prepTime={recipe.prepTime}
                         cookTime={recipe.cookTime}
                         ingredients={recipe.ingredients} /> 
-                ))
-            }
+                ))}
             </ScrollView>
             {headerMenuShowing && 
                 <View style={styles.headerMenu}>

@@ -4,19 +4,31 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SearchBar } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
-import PantryItemView from '../components/PantryItemView';
+import PantryListItemView from '../components/PantryListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
 import { GetPantryItems } from '../data/FakeData';
+import { Loading } from '../components/LoadingView';
 
+// Get props from the stack nav props
 type PantryViewProps = NativeStackScreenProps<RootStackParamList, 'PantryView'>;
 
+/**
+ * A view that displays the items in the pantry
+ * @param props Props for the view
+ * @returns The view
+ */
 export default function PantryView(props: PantryViewProps): ReactElement {
+    // Whether or not the data is loading
     const [loading, setLoading] = useState(true);
+    // The pantry items data
     const [items, setItems] = useState<any[]>([]);
+    // Whether or not the header menu is showing
     const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
+    // The filter text
     const [filter, setFilter] = useState('');
 
+    // Fetch the pantry items data
     useEffect(() => {
         setLoading(true);
         //fetch("https://localhost:7044/Items/Pantry")
@@ -28,6 +40,7 @@ export default function PantryView(props: PantryViewProps): ReactElement {
         });
     }, []);
 
+    // Set the menu options
     useEffect(() => {
         props.navigation.setOptions({
             headerTitle: 'PANTRY',
@@ -52,6 +65,8 @@ export default function PantryView(props: PantryViewProps): ReactElement {
         })
     }, [props.navigation])
 
+    if (loading) return <Loading />
+
     return (
         <>
             <SearchBar
@@ -63,25 +78,18 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                 }}
                 lightTheme={true} />
             <ScrollView style={styles.pantry}>
-                {loading && (
-                    <View>
-                        <Text>Loading...</Text>
-                    </View>
-                )}
-                {!loading &&
-                items.filter(item => {
+                {items.filter(item => {
                     if (filter === "") return true;
                     return item.name.toLowerCase().includes(filter.toLocaleLowerCase());
                 }).map(item => (
-                    <PantryItemView 
+                    <PantryListItemView 
                         key={item.id} 
                         id={item.id} 
                         name={item.name} 
                         quantity={item.quantity} 
                         units={item.units}
                         expiration={item.expiration} /> 
-                ))
-            }
+                ))}
             </ScrollView>
             {headerMenuShowing && 
                 <View style={styles.headerMenu}>

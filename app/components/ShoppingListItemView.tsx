@@ -8,10 +8,16 @@ import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
 import { ShoppingItem } from '../dto/ShoppingItem';
 
+// Get props from the stack nav props
 type ShoppingListViewProps = StackNavigationProp<RootStackParamList, 'ShoppingListItemView'>;
 
+/**
+ * A view that displays a line in the shopping list
+ * @param props Props for the view
+ * @returns The view
+ */
 export default function ShoppingListItemView(props: ShoppingItem) {
-    const navigation = useNavigation<ShoppingListViewProps>();
+    // Whether or not the shopping list item is checked
     const [checked, setChecked] = useState(false);
 
     return (
