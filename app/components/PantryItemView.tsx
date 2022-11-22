@@ -7,13 +7,14 @@ import { PantryItem } from '../dto/PantryItem';
 import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
+import { MonthYear } from '../utils/DateFormatter';
 
 type PantryItemViewProps = StackNavigationProp<RootStackParamList, 'PantryItemView'>;
 
 export default function PantryItemView(props: PantryItem) {
     const navigation = useNavigation<PantryItemViewProps>();
 
-    const formattedDate = props.expiration?.getMonth() + "/" + props.expiration?.getFullYear()
+    const formattedDate = props.expiration ? MonthYear(props.expiration) : null;
 
     return (
         <TouchableHighlight 

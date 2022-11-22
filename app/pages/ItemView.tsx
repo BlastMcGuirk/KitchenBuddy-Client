@@ -5,6 +5,9 @@ import { RootStackParamList } from '../../App';
 import { PantryItem } from '../dto/PantryItem';
 import { GetPantryItem } from '../data/FakeData';
 import PageLayout from '../layouts/PageLayout';
+import { FontSizes } from '../constants/FontSizes';
+import { Paddings } from '../constants/Spacings';
+import { MonthYear } from '../utils/DateFormatter';
 
 type ItemViewProps = NativeStackScreenProps<RootStackParamList, 'ItemView'>;
 
@@ -50,9 +53,13 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
 
     return (
         <PageLayout>
-            <Text>{item.name}</Text>
-            {displayLine("Units", item.units)}
-            {displayLine("Quantity", item.quantity)}
+            <View style={styles.container}>
+                <Text style={styles.title}>{item.name}</Text>
+                <Text style={styles.sublabel}>{item.quantity} {item.units}</Text>
+                {item.expiration && 
+                    <Text style={styles.sublabel}>Exp {MonthYear(item.expiration)}</Text>
+                }
+            </View>
         </PageLayout>
     )
 }
@@ -61,5 +68,14 @@ const styles = StyleSheet.create({
     itemRow: {
         flexDirection: 'row',
     },
-
+    container: {
+        margin: Paddings.Wide,
+    },
+    title: {
+        fontSize: FontSizes.Header,
+        paddingVertical: Paddings.Narrow
+    },
+    sublabel: {
+        fontSize: FontSizes.Sublabel
+    }
 });
