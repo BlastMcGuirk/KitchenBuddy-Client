@@ -8,14 +8,14 @@ import { Paddings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
 import { Recipe } from '../dto/Recipe';
 
-type RecipeListViewProps = StackNavigationProp<RootStackParamList, 'PantryItemView'>;
+type RecipeListViewProps = StackNavigationProp<RootStackParamList, 'RecipeListItemView'>;
 
 export default function RecipeListItemView(props: Recipe) {
     const navigation = useNavigation<RecipeListViewProps>();
     
     return (
         <TouchableHighlight 
-            onPress={() => navigation.navigate('ItemView',
+            onPress={() => navigation.navigate('RecipeView',
                 {
                     id: props.recipeId
                 }

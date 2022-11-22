@@ -4,6 +4,7 @@ import { Platform, StatusBar, StyleSheet } from 'react-native';
 import ItemView from './app/pages/ItemView';
 import { Colors } from './app/constants/Colors';
 import { Home } from './app/pages/Home';
+import RecipeView from './app/pages/RecipeView';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +42,16 @@ export default function App() {
             name="ItemView" 
             component={ItemView}
             options={{
-              headerShown: false
+              headerShown: true,
+              title: ''
+            }}
+          />
+          <Stack.Screen
+            name="RecipeView"
+            component={RecipeView}
+            options={{
+              headerShown: true,
+              title: ''
             }}
           />
         </Stack.Navigator>

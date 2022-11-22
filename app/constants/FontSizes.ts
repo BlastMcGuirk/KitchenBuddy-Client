@@ -5,5 +5,6 @@ export const FontSizes = {
     Label: 24,
     ShoppingItem: 20,
     Sublabel: 16,
-    Menu: 18
+    Menu: 18,
+    Ingredients: 20,
 }

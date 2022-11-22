@@ -26,15 +26,6 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
         });
     }, []);
 
-    function displayLine(label: string, value: any) {
-        return (
-            <View style={styles.itemRow}>
-                <Text>{label}</Text>
-                <Text>{value}</Text>
-            </View>
-        )
-    }
-
     if (loading) {
         return (
             <PageLayout>
@@ -65,15 +56,12 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
 }
 
 const styles = StyleSheet.create({
-    itemRow: {
-        flexDirection: 'row',
-    },
     container: {
         margin: Paddings.Wide,
     },
     title: {
         fontSize: FontSizes.Header,
-        paddingVertical: Paddings.Narrow
+        paddingBottom: Paddings.Narrow
     },
     sublabel: {
         fontSize: FontSizes.Sublabel
