@@ -9,8 +9,8 @@ import ShoppingListItemView from '../components/ShoppingListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
-import { GetShoppingItems } from '../data/FakeData';
 import { ShoppingItem } from '../dto/ShoppingItem';
+import { GET } from '../utils/HTTPRequests';
 
 // Get props from the stack nav props
 type ShoppingViewProps = NativeStackScreenProps<RootStackParamList, 'ShoppingView'>;
@@ -30,14 +30,7 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
 
     // Fetch the data
     useEffect(() => {
-        setLoading(true);
-        //fetch("https://localhost:7044/Items/Pantry")
-        //.then(res => res.json())
-        GetShoppingItems()
-        .then(data => {
-            setShoppingItems(data);
-            setLoading(false);
-        });
+        GET("/Items/Shopping", setLoading, setShoppingItems);
     }, []);
 
     // Set the menu options

@@ -13,6 +13,10 @@ export interface Recipe {
      */
     name: string;
     /**
+     * The description of the recipe
+     */
+    description: string;
+    /**
      * The prep time for the recipe
      */
     prepTime: number;
@@ -23,5 +27,9 @@ export interface Recipe {
     /**
      * The ingredients of the recipe
      */
-    ingredients: RecipeIngredient[];
+    ingredients?: RecipeIngredient[];
+    /**
+     * The instructions for the recipe
+     */
+    instructions: string;
 }

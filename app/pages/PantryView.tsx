@@ -7,8 +7,8 @@ import { RootStackParamList } from '../../App';
 import PantryListItemView from '../components/PantryListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
-import { GetPantryItems } from '../data/FakeData';
 import { Loading } from '../components/LoadingView';
+import { GET } from '../utils/HTTPRequests';
 
 // Get props from the stack nav props
 type PantryViewProps = NativeStackScreenProps<RootStackParamList, 'PantryView'>;
@@ -30,14 +30,7 @@ export default function PantryView(props: PantryViewProps): ReactElement {
 
     // Fetch the pantry items data
     useEffect(() => {
-        setLoading(true);
-        //fetch("https://localhost:7044/Items/Pantry")
-        //.then(res => res.json())
-        GetPantryItems()
-        .then(data => {
-            setItems(data);
-            setLoading(false);
-        });
+        GET('/Items/Pantry', setLoading, setItems);
     }, []);
 
     // Set the menu options

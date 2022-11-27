@@ -3,13 +3,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { RootStackParamList } from '../../App';
 import { PantryItem } from '../dto/PantryItem';
-import { GetPantryItem } from '../data/FakeData';
 import PageLayout from '../layouts/PageLayout';
 import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
 import { MonthYear } from '../utils/DateFormatter';
 import { Loading } from '../components/LoadingView';
 import { NotFound } from '../components/NotFoundView';
+import { GET } from '../utils/HTTPRequests';
 
 // Get props from the stack nav props
 type ItemViewProps = NativeStackScreenProps<RootStackParamList, 'ItemView'>;
@@ -27,14 +27,7 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
 
     // Fetch the data
     useEffect(() => {
-        setLoading(true);
-        //fetch("https://localhost:7044/Items/" + route.params.id + "/Pantry")
-        //.then(res => res.json())
-        GetPantryItem(route.params.id)
-        .then(data => {
-            setItem(data);
-            setLoading(false);
-        });
+        GET('/Items/' + route.params.id + '/Pantry', setLoading, setItem);
     }, []);
 
     if (loading) return <Loading />

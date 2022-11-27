@@ -7,9 +7,9 @@ import { RootStackParamList } from '../../App';
 import RecipeListItemView from '../components/RecipeListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
-import { GetRecipes } from '../data/FakeData';
 import { Recipe } from '../dto/Recipe';
 import { Loading } from '../components/LoadingView';
+import { GET } from '../utils/HTTPRequests';
 
 // Get props from the stack nav props
 type RecipesViewProps = NativeStackScreenProps<RootStackParamList, 'RecipesView'>;
@@ -31,14 +31,7 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
 
     // Fetch the data
     useEffect(() => {
-        setLoading(true);
-        //fetch("https://localhost:7044/Items/Pantry")
-        //.then(res => res.json())
-        GetRecipes()
-        .then(data => {
-            setRecipes(data);
-            setLoading(false);
-        });
+        GET('/Recipes', setLoading, setRecipes);
     }, []);
 
     // Set the menu options
@@ -87,6 +80,8 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                         key={recipe.recipeId}
                         recipeId={recipe.recipeId}
                         name={recipe.name}
+                        description={recipe.description}
+                        instructions={recipe.instructions}
                         prepTime={recipe.prepTime}
                         cookTime={recipe.cookTime}
                         ingredients={recipe.ingredients} /> 

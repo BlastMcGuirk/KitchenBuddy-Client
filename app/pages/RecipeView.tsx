@@ -2,13 +2,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { RootStackParamList } from '../../App';
-import { GetRecipe } from '../data/FakeData';
 import PageLayout from '../layouts/PageLayout';
 import { Recipe } from '../dto/Recipe';
 import { Paddings } from '../constants/Spacings';
 import { FontSizes } from '../constants/FontSizes';
 import { Loading } from '../components/LoadingView';
 import { NotFound } from '../components/NotFoundView';
+import { GET } from '../utils/HTTPRequests';
 
 // Get props from the stack nav props
 type RecipeViewProps = NativeStackScreenProps<RootStackParamList, 'RecipeView'>;
@@ -26,14 +26,7 @@ export default function RecipeView({ route, navigation }: RecipeViewProps): Reac
 
     // Fetch the data
     useEffect(() => {
-        setLoading(true);
-        //fetch("https://localhost:7044/Items/" + route.params.id + "/Pantry")
-        //.then(res => res.json())
-        GetRecipe(route.params.id)
-        .then(data => {
-            setRecipe(data);
-            setLoading(false);
-        });
+        GET('/Recipes/' + route.params.id, setLoading, setRecipe);
     }, []);
 
     if (loading) return <Loading />
@@ -43,17 +36,28 @@ export default function RecipeView({ route, navigation }: RecipeViewProps): Reac
         <PageLayout>
             <View style={styles.container}>
                 <Text style={styles.title}>{recipe.name}</Text>
+                <Text style={styles.sublabel}>{recipe.description}</Text>
                 <View style={styles.row}>
                     <Text style={styles.sublabel}>Prep: {recipe.prepTime}</Text>
                     <Text style={[styles.sublabel, styles.leftPadding]}>Cook: {recipe.cookTime}</Text>
                 </View>
                 <View style={styles.ingredientsView}>
                     <Text style={styles.ingredient}>Ingredients:</Text>
-                    {recipe.ingredients.map(ingredient => {
+                    {recipe.ingredients?.map(ingredient => {
                         return(
-                            <View style={[styles.row, styles.leftPadding]}>
+                            <View style={[styles.row, styles.leftPadding]} key={ingredient.id}>
                                 <Text style={styles.ingredientName}>{ingredient.name}</Text>
                                 <Text style={styles.ingredientQuantity}>{ingredient.quantity} {ingredient.units}</Text>
+                            </View>
+                        )
+                    })}
+                </View>
+                <View style={styles.ingredientsView}>
+                    <Text style={styles.ingredient}>Instructions:</Text>
+                    {recipe.instructions.split("\n").map((instruction, i) => {
+                        return (
+                            <View style={[styles.row, styles.leftPadding]} key={i}>
+                                <Text style={styles.ingredientName}>{(i + 1) + ")"} {instruction}</Text>
                             </View>
                         )
                     })}
@@ -88,10 +92,10 @@ const styles = StyleSheet.create({
     },
     ingredientName: {
         flex: .5,
-        fontSize: FontSizes.Ingredients
+        fontSize: FontSizes.Sublabel
     },
     ingredientQuantity: {
         flex: .5,
-        fontSize: FontSizes.Ingredients
+        fontSize: FontSizes.Sublabel
     }
 });

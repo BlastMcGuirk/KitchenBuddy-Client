@@ -31,11 +31,11 @@ export default function RecipeListItemView(props: Recipe) {
         >
             <View style={styles.item}>
                 <Text style={styles.label}>{props.name}</Text>
+                <Text style={styles.sublabel}>{props.description}</Text>
                 <View style={styles.row}>
                     <Text style={styles.sublabel}>Prep: {props.prepTime}</Text>
                     <Text style={[styles.sublabel, styles.leftPadding]}>Cook: {props.cookTime}</Text>
                 </View>
-                <Text style={styles.sublabel}>Tags: {props.ingredients.map(ingredient => ingredient.name).join(', ')}</Text>
             </View>
         </TouchableHighlight>
     )
