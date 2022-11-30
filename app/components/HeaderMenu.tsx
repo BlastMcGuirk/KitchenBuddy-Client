@@ -3,12 +3,37 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
 
-export interface HeaderMenuProps {
-    showing: boolean;
-    options: {name: string; onPress: () => void}[];
+/**
+ * A menu option
+ */
+interface MenuOption {
+    // The text to display
+    name: string;
+    // The action to take
+    onPress: () => void;
 }
 
+/**
+ * Props for the Header Menu
+ */
+export interface HeaderMenuProps {
+    /**
+     * Whether or not the menu is visible
+     */
+    showing: boolean;
+    /**
+     * The menu options
+     */
+    options: MenuOption[];
+}
+
+/**
+ * Renders the header menu, or nothing if it is not visible
+ * @param props HeaderMenuProps
+ * @returns The header menu
+ */
 export function HeaderMenu(props: HeaderMenuProps) {
+    // Render nothing if it shouldn't be showing
     if (!props.showing) return (<></>);
 
     return (

@@ -1,11 +1,10 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { SearchBar } from '@rneui/themed';
 import { RootStackParamList } from '../../App';
 import RecipeListItemView from '../components/RecipeListItemView';
 import { Colors } from '../constants/Colors';
-import { FontSizes } from '../constants/FontSizes';
 import { Recipe } from '../dto/Recipe';
 import { Loading } from '../components/LoadingView';
 import { GET } from '../utils/HTTPRequests';
