@@ -4,24 +4,24 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { RootStackParamList } from '../../App';
 import { HeaderMenu } from '../components/HeaderMenu';
-import { Loading } from '../components/LoadingView';
-import ShoppingListItemView from '../components/ShoppingListItemView';
+import { Loading } from '../components/Loading';
+import { ShoppingListListItem } from '../components/ShoppingListListItem';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
-import { Paddings } from '../constants/Spacings';
+import { Spacings } from '../constants/Spacings';
 import { ShoppingItem } from '../dto/ShoppingItem';
 import { FormatHeader } from '../utils/FormatHeader';
 import { GET } from '../utils/HTTPRequests';
 
 // Get props from the stack nav props
-type ShoppingViewProps = NativeStackScreenProps<RootStackParamList, 'ShoppingView'>;
+type ShoppingListPageProps = NativeStackScreenProps<RootStackParamList, 'ShoppingListPage'>;
 
 /**
- * A view that displays the shopping list items
- * @param props Props for the view
- * @returns The view
+ * A page that displays the shopping list items
+ * @param props Props for the page
+ * @returns The page
  */
-export default function ShoppingView(props: ShoppingViewProps): ReactElement {
+export function ShoppingListPage(props: ShoppingListPageProps): ReactElement {
     // Whether or not the data is loading
     const [loading, setLoading] = useState(true);
     // The shopping items data
@@ -53,7 +53,7 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
                 </View>
                 {loading && <Loading />}
                 {!loading && shoppingItems.map(shoppingItem => (
-                    <ShoppingListItemView 
+                    <ShoppingListListItem 
                         key={shoppingItem.id} 
                         id={shoppingItem.id} 
                         name={shoppingItem.name}
@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
     label: {
         flexDirection: 'row',
         backgroundColor: Colors.LightPrimary,
-        padding: Paddings.Narrow,
+        padding: Spacings.Narrow,
         alignItems: 'center'
     },
     labelItem: {
         fontSize: FontSizes.Label,
-        marginLeft: Paddings.Narrow,
+        marginLeft: Spacings.Narrow,
         flex: .55,
     },
     labelQuantity: {

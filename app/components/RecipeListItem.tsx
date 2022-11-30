@@ -4,24 +4,24 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../App';
 import { useNavigation } from '@react-navigation/native';
 import { FontSizes } from '../constants/FontSizes';
-import { Paddings } from '../constants/Spacings';
+import { Spacings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
 import { Recipe } from '../dto/Recipe';
 
 // Get props from the stack nav props
-type RecipeListViewProps = StackNavigationProp<RootStackParamList, 'RecipeListItemView'>;
+type RecipeListItemProps = StackNavigationProp<RootStackParamList, 'RecipeListItem'>;
 
 /**
  * A view that displays a line in the recipes list
  * @param props Props for the view
  * @returns The view
  */
-export default function RecipeListItemView(props: Recipe) {
-    const navigation = useNavigation<RecipeListViewProps>();
+export function RecipeListItem(props: Recipe) {
+    const navigation = useNavigation<RecipeListItemProps>();
     
     return (
         <TouchableHighlight 
-            onPress={() => navigation.navigate('RecipeView',
+            onPress={() => navigation.navigate('RecipeDetailsPage',
                 {
                     id: props.recipeId
                 }
@@ -43,23 +43,23 @@ export default function RecipeListItemView(props: Recipe) {
 
 const styles = StyleSheet.create({
     item: {
-        padding: Paddings.Standard,
-        paddingVertical: Paddings.Narrow
+        padding: Spacings.Standard,
+        paddingVertical: Spacings.Narrow
     },
     row: {
         flexDirection: 'row'
     },
     label: {
         fontSize: FontSizes.Recipe,
-        paddingBottom: Paddings.Narrow
+        paddingBottom: Spacings.Narrow
     },
     sublabel: {
         flexDirection: "row",
         fontSize: FontSizes.RecipeSmall,
-        paddingBottom: Paddings.Narrow
+        paddingBottom: Spacings.Narrow
     },
     leftPadding: {
-        paddingLeft: Paddings.Wide
+        paddingLeft: Spacings.Wide
     }
 })
 

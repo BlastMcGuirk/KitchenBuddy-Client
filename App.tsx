@@ -1,22 +1,22 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Platform, StatusBar, StyleSheet } from 'react-native';
-import ItemView from './app/pages/ItemView';
-import { Colors } from './app/constants/Colors';
+import { ItemDetailsPage } from './app/pages/ItemDetailsPage';
 import { Home } from './app/pages/Home';
-import RecipeView from './app/pages/RecipeView';
+import { RecipeDetailsPage } from './app/pages/RecipeDetailsPage';
+import { Colors } from './app/constants/Colors';
 
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
-  PantryView: {},
-  RecipesView: {},
-  ShoppingView: {},
-  PantryItemView: {},
-  RecipeListItemView: {},
-  ShoppingListItemView: {},
-  ItemView: {id: number},
-  RecipeView: {id: number}
+  PantryPage: undefined,
+  RecipesPage: undefined,
+  ShoppingListPage: undefined,
+  ItemDetailsPage: {id: number},
+  RecipeDetailsPage: {id: number},
+  PantryListItem: undefined,
+  RecipeListItem: undefined,
+  ShoppingListListItem: undefined,
 }
 
 export default function App() {
@@ -39,16 +39,16 @@ export default function App() {
             }}
           />
           <Stack.Screen 
-            name="ItemView" 
-            component={ItemView}
+            name="ItemDetailsPage" 
+            component={ItemDetailsPage}
             options={{
               headerShown: true,
               title: ''
             }}
           />
           <Stack.Screen
-            name="RecipeView"
-            component={RecipeView}
+            name="RecipeDetailsPage"
+            component={RecipeDetailsPage}
             options={{
               headerShown: true,
               title: ''

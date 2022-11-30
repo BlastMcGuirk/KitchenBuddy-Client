@@ -1,24 +1,25 @@
 import React, { ReactElement, useEffect, useState } from 'react'
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SearchBar } from '@rneui/themed';
 import { RootStackParamList } from '../../App';
-import PantryListItemView from '../components/PantryListItemView';
+import { PantryListItem } from '../components/PantryListItem';
 import { Colors } from '../constants/Colors';
-import { Loading } from '../components/LoadingView';
+import { Loading } from '../components/Loading';
 import { GET } from '../utils/HTTPRequests';
 import { FormatHeader } from '../utils/FormatHeader';
 import { HeaderMenu } from '../components/HeaderMenu';
+import { CommonStyles } from '../styles/CommonStyles';
 
 // Get props from the stack nav props
-type PantryViewProps = NativeStackScreenProps<RootStackParamList, 'PantryView'>;
+type PantryPageProps = NativeStackScreenProps<RootStackParamList, 'PantryPage'>;
 
 /**
- * A view that displays the items in the pantry
- * @param props Props for the view
- * @returns The view
+ * A page that displays the items in the pantry
+ * @param props Props for the page
+ * @returns The page
  */
-export default function PantryView(props: PantryViewProps): ReactElement {
+export function PantryPage(props: PantryPageProps): ReactElement {
     // Whether or not the data is loading
     const [loading, setLoading] = useState(true);
     // The pantry items data
@@ -48,13 +49,13 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                     backgroundColor: Colors.Background,
                 }}
                 lightTheme={true} />
-            <ScrollView style={styles.pantryList}>
+            <ScrollView style={CommonStyles.StandardBackground}>
                 {loading && <Loading />}
                 {!loading && items.filter(item => {
                     if (filter === "") return true;
                     return item.name.toLowerCase().includes(filter.toLocaleLowerCase());
                 }).map(item => (
-                    <PantryListItemView 
+                    <PantryListItem 
                         key={item.id} 
                         id={item.id} 
                         name={item.name} 
@@ -71,9 +72,3 @@ export default function PantryView(props: PantryViewProps): ReactElement {
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    pantryList: {
-        backgroundColor: Colors.Background
-    }
-});

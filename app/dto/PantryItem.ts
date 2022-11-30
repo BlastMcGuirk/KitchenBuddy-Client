@@ -11,5 +11,5 @@ export interface PantryItem extends Item {
     /**
      * Optional expiration date
      */
-    expiration?: Date;
+    expiration: Date | null;
 }

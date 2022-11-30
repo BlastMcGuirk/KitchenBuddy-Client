@@ -5,24 +5,24 @@ import { RootStackParamList } from '../../App';
 import { useNavigation } from '@react-navigation/native';
 import { PantryItem } from '../dto/PantryItem';
 import { FontSizes } from '../constants/FontSizes';
-import { Paddings } from '../constants/Spacings';
+import { Spacings } from '../constants/Spacings';
 import { Colors } from '../constants/Colors';
 import { MonthYear } from '../utils/DateFormatter';
 
 // Get props from the stack nav props
-type PantryItemViewProps = StackNavigationProp<RootStackParamList, 'PantryItemView'>;
+type PantryListItemProps = StackNavigationProp<RootStackParamList, 'PantryListItem'>;
 
 /**
- * A view that displays a line in the pantry list
- * @param props Props for the view
- * @returns The Pantry Item view
+ * A component that displays a line in the pantry list
+ * @param props Props for the component
+ * @returns The Pantry List Item component
  */
-export default function PantryListItemView(props: PantryItem) {
-    const navigation = useNavigation<PantryItemViewProps>();
+export function PantryListItem(props: PantryItem) {
+    const navigation = useNavigation<PantryListItemProps>();
 
     return (
         <TouchableHighlight 
-            onPress={() => navigation.navigate('ItemView',
+            onPress={() => navigation.navigate('ItemDetailsPage',
                 {
                     id: props.id
                 }
@@ -48,7 +48,7 @@ export default function PantryListItemView(props: PantryItem) {
 
 const styles = StyleSheet.create({
     item: {
-        padding: Paddings.Standard,
+        padding: Spacings.Standard,
         borderBottomColor: Colors.Gray,
         borderBottomWidth: 1,
     },

@@ -2,23 +2,24 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { RootStackParamList } from '../../App';
-import PageLayout from '../layouts/PageLayout';
+import { PageLayout } from '../layouts/PageLayout';
 import { Recipe } from '../dto/Recipe';
-import { Paddings } from '../constants/Spacings';
+import { Spacings } from '../constants/Spacings';
 import { FontSizes } from '../constants/FontSizes';
-import { Loading } from '../components/LoadingView';
-import { NotFound } from '../components/NotFoundView';
+import { Loading } from '../components/Loading';
+import { NotFound } from '../components/NotFound';
 import { GET } from '../utils/HTTPRequests';
+import { CommonStyles } from '../styles/CommonStyles';
 
 // Get props from the stack nav props
-type RecipeViewProps = NativeStackScreenProps<RootStackParamList, 'RecipeView'>;
+type RecipeDetailsPageProps = NativeStackScreenProps<RootStackParamList, 'RecipeDetailsPage'>;
 
 /**
- * A view that displays all the data about a recipe
- * @param props Props for the view
- * @returns The view
+ * A page that displays all the data about a recipe
+ * @param props Props for the page
+ * @returns The page
  */
-export default function RecipeView({ route, navigation }: RecipeViewProps): ReactElement {
+export function RecipeDetailsPage({ route, navigation }: RecipeDetailsPageProps): ReactElement {
     // Whether or not the data is loading
     const [loading, setLoading] = useState(false);
     // The recipe data
@@ -34,7 +35,7 @@ export default function RecipeView({ route, navigation }: RecipeViewProps): Reac
 
     return (
         <PageLayout>
-            <View style={styles.container}>
+            <View style={CommonStyles.WideMargin}>
                 <Text style={styles.title}>{recipe.name}</Text>
                 <Text style={styles.sublabel}>{recipe.description}</Text>
                 <View style={styles.row}>
@@ -68,12 +69,9 @@ export default function RecipeView({ route, navigation }: RecipeViewProps): Reac
 }
 
 const styles = StyleSheet.create({
-    container: {
-        margin: Paddings.Wide,
-    },
     title: {
         fontSize: FontSizes.Header,
-        paddingBottom: Paddings.Narrow
+        paddingBottom: Spacings.Narrow
     },
     sublabel: {
         fontSize: FontSizes.Sublabel
@@ -82,10 +80,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     leftPadding: {
-        paddingLeft: Paddings.Wide
+        paddingLeft: Spacings.Wide
     },
     ingredientsView: {
-        paddingTop: Paddings.Narrow
+        paddingTop: Spacings.Narrow
     },
     ingredient: {
         fontSize: FontSizes.Ingredients

@@ -1,14 +1,18 @@
 import React, { ReactElement } from 'react'
-import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Colors } from '../constants/Colors';
+import { CommonStyles } from '../styles/CommonStyles';
 
 export interface PageLayout {
     children: ReactElement | ReactElement[];
 }
 
-export default function PageLayout(props: PageLayout) {
+export function PageLayout(props: PageLayout) {
     return (
-        <View style={styles.container}>
+        <View style={[
+            CommonStyles.StandardBackground,
+            CommonStyles.WideMargin
+        ]}>
             {props.children}
         </View>
     )
@@ -17,7 +21,6 @@ export default function PageLayout(props: PageLayout) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.Background,
-        //paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        backgroundColor: Colors.Background
     }
 });

@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
         borderWidth: 1,
         borderTopWidth: 0,
+        minWidth: 150,
         display: 'flex',
         backgroundColor: Colors.White
     },

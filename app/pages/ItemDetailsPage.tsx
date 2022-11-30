@@ -3,23 +3,24 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { RootStackParamList } from '../../App';
 import { PantryItem } from '../dto/PantryItem';
-import PageLayout from '../layouts/PageLayout';
+import { PageLayout } from '../layouts/PageLayout';
 import { FontSizes } from '../constants/FontSizes';
-import { Paddings } from '../constants/Spacings';
+import { Spacings } from '../constants/Spacings';
 import { MonthYear } from '../utils/DateFormatter';
-import { Loading } from '../components/LoadingView';
-import { NotFound } from '../components/NotFoundView';
+import { Loading } from '../components/Loading';
+import { NotFound } from '../components/NotFound';
 import { GET } from '../utils/HTTPRequests';
+import { CommonStyles } from '../styles/CommonStyles';
 
 // Get props from the stack nav props
-type ItemViewProps = NativeStackScreenProps<RootStackParamList, 'ItemView'>;
+type ItemDetailsPageProps = NativeStackScreenProps<RootStackParamList, 'ItemDetailsPage'>;
 
 /**
- * A view that displays all the data about an item
- * @param props Props for the view
- * @returns The view
+ * A page that displays all the data about an item
+ * @param props Props for the page
+ * @returns The page
  */
-export default function ItemView({ route, navigation }: ItemViewProps): ReactElement {
+export function ItemDetailsPage(props: ItemDetailsPageProps): ReactElement {
     // Whether or not the data is loading
     const [loading, setLoading] = useState(false);
     // The item data
@@ -27,7 +28,7 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
 
     // Fetch the data
     useEffect(() => {
-        GET('/Items/' + route.params.id + '/Pantry', setLoading, setItem);
+        GET('/Items/Pantry/' + props.route.params.id, setLoading, setItem);
     }, []);
 
     if (loading) return <Loading />
@@ -35,7 +36,7 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
 
     return (
         <PageLayout>
-            <View style={styles.container}>
+            <View style={CommonStyles.WideMargin}>
                 <Text style={styles.title}>{item.name}</Text>
                 <Text style={styles.sublabel}>{item.quantity} {item.units}</Text>
                 {item.expiration && 
@@ -47,12 +48,9 @@ export default function ItemView({ route, navigation }: ItemViewProps): ReactEle
 }
 
 const styles = StyleSheet.create({
-    container: {
-        margin: Paddings.Wide,
-    },
     title: {
         fontSize: FontSizes.Header,
-        paddingBottom: Paddings.Narrow
+        paddingBottom: Spacings.Narrow
     },
     sublabel: {
         fontSize: FontSizes.Sublabel
