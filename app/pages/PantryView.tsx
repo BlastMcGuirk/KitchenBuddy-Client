@@ -2,13 +2,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SearchBar } from '@rneui/themed';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
 import PantryListItemView from '../components/PantryListItemView';
 import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
 import { Loading } from '../components/LoadingView';
 import { GET } from '../utils/HTTPRequests';
+import { FormatHeader } from '../utils/FormatHeader';
 
 // Get props from the stack nav props
 type PantryViewProps = NativeStackScreenProps<RootStackParamList, 'PantryView'>;
@@ -33,32 +33,10 @@ export default function PantryView(props: PantryViewProps): ReactElement {
         GET('/Items/Pantry', setLoading, setItems);
     }, []);
 
-    // Set the menu options
+    // Set the header
     useEffect(() => {
-        props.navigation.setOptions({
-            headerTitle: 'PANTRY',
-            headerRight: () => (
-                <View style={{marginRight: 10}}>
-                    <Icon 
-                        name="more-vert" 
-                        color={Colors.Black} 
-                        size={FontSizes.Header} 
-                        onPress={() => {
-                            setHeaderMenuShowing(prev => !prev);
-                        }} />
-                </View>
-            ),
-            headerTintColor: Colors.Black,
-            headerStyle: {
-                backgroundColor: Colors.Primary
-            },
-            headerTitleStyle: {
-                fontSize: FontSizes.Header
-            }
-        })
+        FormatHeader(props.navigation, 'PANTRY', setHeaderMenuShowing);
     }, [props.navigation])
-
-    if (loading) return <Loading />
 
     return (
         <>
@@ -71,7 +49,8 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                 }}
                 lightTheme={true} />
             <ScrollView style={styles.pantry}>
-                {items.filter(item => {
+                {loading && <Loading />}
+                {!loading && items.filter(item => {
                     if (filter === "") return true;
                     return item.name.toLowerCase().includes(filter.toLocaleLowerCase());
                 }).map(item => (

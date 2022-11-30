@@ -12,6 +12,7 @@ export function GET<T>(
     setLoading: (loading: boolean) => void, 
     setData: (data: T) => void) 
 {
+    console.log("GET: " + endpoint);
     setLoading(true);
     fetch(URL + endpoint)
         .then(res => res.json())

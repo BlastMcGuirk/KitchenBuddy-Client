@@ -2,7 +2,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SearchBar } from '@rneui/themed';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
 import RecipeListItemView from '../components/RecipeListItemView';
 import { Colors } from '../constants/Colors';
@@ -10,6 +9,7 @@ import { FontSizes } from '../constants/FontSizes';
 import { Recipe } from '../dto/Recipe';
 import { Loading } from '../components/LoadingView';
 import { GET } from '../utils/HTTPRequests';
+import { FormatHeader } from '../utils/FormatHeader';
 
 // Get props from the stack nav props
 type RecipesViewProps = NativeStackScreenProps<RootStackParamList, 'RecipesView'>;
@@ -36,30 +36,8 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
 
     // Set the menu options
     useEffect(() => {
-        props.navigation.setOptions({
-            headerTitle: 'RECIPES',
-            headerRight: () => (
-                <View style={{marginRight: 10}}>
-                    <Icon 
-                        name="more-vert" 
-                        color={Colors.Black} 
-                        size={FontSizes.Header} 
-                        onPress={() => {
-                            setHeaderMenuShowing(prev => !prev);
-                        }} />
-                </View>
-            ),
-            headerTintColor: Colors.Black,
-            headerStyle: {
-                backgroundColor: Colors.Primary
-            },
-            headerTitleStyle: {
-                fontSize: FontSizes.Header
-            }
-        })
+        FormatHeader(props.navigation, 'RECIPES', setHeaderMenuShowing);
     }, [props.navigation])
-
-    if (loading) return <Loading />
 
     return (
         <>
@@ -72,7 +50,8 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                 }}
                 lightTheme={true} />
             <ScrollView style={styles.pantry}>
-                {recipes.filter(recipe => {
+                {loading && <Loading />}
+                {!loading && recipes.filter(recipe => {
                     if (filter === "") return true;
                     return recipe.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
                 }).map(recipe => (

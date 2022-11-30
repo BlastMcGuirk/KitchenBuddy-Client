@@ -2,7 +2,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import CheckBox from 'expo-checkbox';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../App';
 import { Loading } from '../components/LoadingView';
 import ShoppingListItemView from '../components/ShoppingListItemView';
@@ -10,6 +9,7 @@ import { Colors } from '../constants/Colors';
 import { FontSizes } from '../constants/FontSizes';
 import { Paddings } from '../constants/Spacings';
 import { ShoppingItem } from '../dto/ShoppingItem';
+import { FormatHeader } from '../utils/FormatHeader';
 import { GET } from '../utils/HTTPRequests';
 
 // Get props from the stack nav props
@@ -35,27 +35,7 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
 
     // Set the menu options
     useEffect(() => {
-        props.navigation.setOptions({
-            headerTitle: 'SHOPPING',
-            headerRight: () => (
-                <View style={{marginRight: 10}}>
-                    <Icon 
-                        name="more-vert" 
-                        color={Colors.Black} 
-                        size={FontSizes.Header} 
-                        onPress={() => {
-                            setHeaderMenuShowing(prev => !prev);
-                        }} />
-                </View>
-            ),
-            headerTintColor: Colors.Black,
-            headerStyle: {
-                backgroundColor: Colors.Primary
-            },
-            headerTitleStyle: {
-                fontSize: FontSizes.Header
-            }
-        })
+        FormatHeader(props.navigation, 'SHOPPING', setHeaderMenuShowing);
     }, [props.navigation])
 
     if (loading) return <Loading />
@@ -70,7 +50,8 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
                     <Text style={styles.labelQuantity}>Qty</Text>
                     <Text style={styles.labelUnits}>Units</Text>
                 </View>
-                {shoppingItems.map(shoppingItem => (
+                {loading && <Loading />}
+                {!loading && shoppingItems.map(shoppingItem => (
                     <ShoppingListItemView 
                         key={shoppingItem.id} 
                         id={shoppingItem.id} 
