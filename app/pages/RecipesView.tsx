@@ -10,6 +10,7 @@ import { Recipe } from '../dto/Recipe';
 import { Loading } from '../components/LoadingView';
 import { GET } from '../utils/HTTPRequests';
 import { FormatHeader } from '../utils/FormatHeader';
+import { HeaderMenu } from '../components/HeaderMenu';
 
 // Get props from the stack nav props
 type RecipesViewProps = NativeStackScreenProps<RootStackParamList, 'RecipesView'>;
@@ -49,7 +50,7 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                     backgroundColor: Colors.Background,
                 }}
                 lightTheme={true} />
-            <ScrollView style={styles.pantry}>
+            <ScrollView style={styles.recipesList}>
                 {loading && <Loading />}
                 {!loading && recipes.filter(recipe => {
                     if (filter === "") return true;
@@ -66,34 +67,15 @@ export default function RecipesView(props: RecipesViewProps): ReactElement {
                         ingredients={recipe.ingredients} /> 
                 ))}
             </ScrollView>
-            {headerMenuShowing && 
-                <View style={styles.headerMenu}>
-                    <Text style={styles.headerOption}>Add Food</Text>
-                    <Text style={styles.headerOption}>Second</Text>
-                </View>
-            }
+            <HeaderMenu showing={headerMenuShowing} options={[
+                {name: 'Add New Recipe', onPress: () => console.log("Pressipe")}
+            ]} />
         </>
     )
 }
 
 const styles = StyleSheet.create({
-    pantry: {
+    recipesList: {
         backgroundColor: Colors.Background
-    },
-    headerMenu: {
-        position: 'absolute',
-        right: 0,
-        zIndex: 1,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        display: 'flex',
-    },
-    headerOption: {
-        borderTopWidth: 1,
-        padding: 5,
-        paddingLeft: 10,
-        width: 150,
-        height: 40,
-        fontSize: FontSizes.Menu
     }
 });

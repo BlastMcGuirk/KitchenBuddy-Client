@@ -1,6 +1,6 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SearchBar } from '@rneui/themed';
 import { RootStackParamList } from '../../App';
 import PantryListItemView from '../components/PantryListItemView';
@@ -9,6 +9,7 @@ import { FontSizes } from '../constants/FontSizes';
 import { Loading } from '../components/LoadingView';
 import { GET } from '../utils/HTTPRequests';
 import { FormatHeader } from '../utils/FormatHeader';
+import { HeaderMenu } from '../components/HeaderMenu';
 
 // Get props from the stack nav props
 type PantryViewProps = NativeStackScreenProps<RootStackParamList, 'PantryView'>;
@@ -48,7 +49,7 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                     backgroundColor: Colors.Background,
                 }}
                 lightTheme={true} />
-            <ScrollView style={styles.pantry}>
+            <ScrollView style={styles.pantryList}>
                 {loading && <Loading />}
                 {!loading && items.filter(item => {
                     if (filter === "") return true;
@@ -63,34 +64,17 @@ export default function PantryView(props: PantryViewProps): ReactElement {
                         expiration={item.expiration} /> 
                 ))}
             </ScrollView>
-            {headerMenuShowing && 
-                <View style={styles.headerMenu}>
-                    <Text style={styles.headerOption}>Add Food</Text>
-                    <Text style={styles.headerOption}>Second</Text>
-                </View>
-            }
+            <HeaderMenu showing={headerMenuShowing} options={[
+                {name: 'Add New Item', onPress: () => console.log("Pressed")},
+                {name: 'Delete', onPress: () => console.log("Pressed")},
+                {name: 'Delete but really long', onPress: () => console.log("Pressed")}
+            ]} />
         </>
     )
 }
 
 const styles = StyleSheet.create({
-    pantry: {
+    pantryList: {
         backgroundColor: Colors.Background
-    },
-    headerMenu: {
-        position: 'absolute',
-        right: 0,
-        zIndex: 1,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        display: 'flex',
-    },
-    headerOption: {
-        borderTopWidth: 1,
-        padding: 5,
-        paddingLeft: 10,
-        width: 150,
-        height: 40,
-        fontSize: FontSizes.Menu
     }
 });

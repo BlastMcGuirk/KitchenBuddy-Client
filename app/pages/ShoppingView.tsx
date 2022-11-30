@@ -3,6 +3,7 @@ import CheckBox from 'expo-checkbox';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { RootStackParamList } from '../../App';
+import { HeaderMenu } from '../components/HeaderMenu';
 import { Loading } from '../components/LoadingView';
 import ShoppingListItemView from '../components/ShoppingListItemView';
 import { Colors } from '../constants/Colors';
@@ -61,12 +62,9 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
                         units={shoppingItem.units} /> 
                 ))}
             </ScrollView>
-            {headerMenuShowing && 
-                <View style={styles.headerMenu}>
-                    <Text style={styles.headerOption}>Add Food</Text>
-                    <Text style={styles.headerOption}>Second</Text>
-                </View>
-            }
+            <HeaderMenu showing={headerMenuShowing} options={[
+                {name: 'Clear All', onPress: () => console.log("Cleared")}
+            ]} />
         </>
     )
 }
@@ -74,22 +72,6 @@ export default function ShoppingView(props: ShoppingViewProps): ReactElement {
 const styles = StyleSheet.create({
     pantry: {
         backgroundColor: Colors.Background
-    },
-    headerMenu: {
-        position: 'absolute',
-        right: 0,
-        zIndex: 1,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        display: 'flex',
-    },
-    headerOption: {
-        borderTopWidth: 1,
-        padding: 5,
-        paddingLeft: 10,
-        width: 150,
-        height: 40,
-        fontSize: FontSizes.Menu
     },
     label: {
         flexDirection: 'row',
