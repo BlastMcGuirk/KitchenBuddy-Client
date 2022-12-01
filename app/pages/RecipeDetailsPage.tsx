@@ -35,7 +35,7 @@ export function RecipeDetailsPage({ route, navigation }: RecipeDetailsPageProps)
 
     return (
         <PageLayout>
-            <View style={CommonStyles.WideMargin}>
+            <View style={CommonStyles.Margin_Standard}>
                 <Text style={styles.title}>{recipe.name}</Text>
                 <Text style={styles.sublabel}>{recipe.description}</Text>
                 <View style={styles.row}>

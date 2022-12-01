@@ -8,7 +8,6 @@ import { Colors } from '../constants/Colors';
 import { Loading } from '../components/Loading';
 import { GET } from '../utils/HTTPRequests';
 import { FormatHeader } from '../utils/FormatHeader';
-import { HeaderMenu } from '../components/HeaderMenu';
 import { CommonStyles } from '../styles/CommonStyles';
 
 // Get props from the stack nav props
@@ -24,8 +23,6 @@ export function PantryPage(props: PantryPageProps): ReactElement {
     const [loading, setLoading] = useState(true);
     // The pantry items data
     const [items, setItems] = useState<any[]>([]);
-    // Whether or not the header menu is showing
-    const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
     // The filter text
     const [filter, setFilter] = useState('');
 
@@ -36,7 +33,9 @@ export function PantryPage(props: PantryPageProps): ReactElement {
 
     // Set the header
     useEffect(() => {
-        FormatHeader(props.navigation, 'PANTRY', setHeaderMenuShowing);
+        FormatHeader(props.navigation, 'PANTRY', [
+            {name: 'Add New Item', onPress: () => console.log("Adding new item")}
+        ]);
     }, [props.navigation])
 
     return (
@@ -46,10 +45,10 @@ export function PantryPage(props: PantryPageProps): ReactElement {
                 value={filter}
                 onChangeText={setFilter}
                 containerStyle={{
-                    backgroundColor: Colors.Background,
+                    backgroundColor: Colors.LightPrimary,
                 }}
                 lightTheme={true} />
-            <ScrollView style={CommonStyles.StandardBackground}>
+            <ScrollView style={CommonStyles.Background_Standard}>
                 {loading && <Loading />}
                 {!loading && items.filter(item => {
                     if (filter === "") return true;
@@ -64,11 +63,6 @@ export function PantryPage(props: PantryPageProps): ReactElement {
                         expiration={item.expiration} /> 
                 ))}
             </ScrollView>
-            <HeaderMenu showing={headerMenuShowing} options={[
-                {name: 'Add New Item', onPress: () => console.log("Pressed")},
-                {name: 'Delete', onPress: () => console.log("Pressed")},
-                {name: 'Delete but really long', onPress: () => console.log("Pressed")}
-            ]} />
         </>
     )
 }

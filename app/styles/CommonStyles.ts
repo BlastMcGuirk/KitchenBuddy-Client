@@ -4,12 +4,18 @@ import { Spacings } from '../constants/Spacings';
 
 export const CommonStyles = StyleSheet.create({
     // Backgrounds
-    StandardBackground: {
+    Background_Standard: {
         backgroundColor: Colors.Background
     },
 
     // Margins and Paddings
-    WideMargin: {
+    Margin_Wide: {
         margin: Spacings.Wide
+    },
+    Margin_Standard: {
+        margin: Spacings.Standard
+    },
+    Margin_Narrow: {
+        margin: Spacings.Narrow
     }
 });

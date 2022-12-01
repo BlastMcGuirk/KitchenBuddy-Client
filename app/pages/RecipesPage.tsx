@@ -9,7 +9,7 @@ import { Recipe } from '../dto/Recipe';
 import { Loading } from '../components/Loading';
 import { GET } from '../utils/HTTPRequests';
 import { FormatHeader } from '../utils/FormatHeader';
-import { HeaderMenu } from '../components/HeaderMenu';
+import { CommonStyles } from '../styles/CommonStyles';
 
 // Get props from the stack nav props
 type RecipesPageProps = NativeStackScreenProps<RootStackParamList, 'RecipesPage'>;
@@ -24,8 +24,6 @@ export function RecipesPage(props: RecipesPageProps): ReactElement {
     const [loading, setLoading] = useState(true);
     // The recipes data
     const [recipes, setRecipes] = useState<Recipe[]>([]);
-    // Whether or not the header menu is showing
-    const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
     // The filter text
     const [filter, setFilter] = useState('');
 
@@ -36,20 +34,22 @@ export function RecipesPage(props: RecipesPageProps): ReactElement {
 
     // Set the menu options
     useEffect(() => {
-        FormatHeader(props.navigation, 'RECIPES', setHeaderMenuShowing);
+        FormatHeader(props.navigation, 'RECIPES', [
+            {name: 'Add New Recipe', onPress: () => console.log("Adding new recipe")},
+        ]);
     }, [props.navigation])
 
     return (
         <>
             <SearchBar
-                placeholder='Search for food...'
+                placeholder='Search for recipes...'
                 value={filter}
                 onChangeText={setFilter}
                 containerStyle={{
-                    backgroundColor: Colors.Background,
+                    backgroundColor: Colors.LightPrimary
                 }}
                 lightTheme={true} />
-            <ScrollView style={styles.recipesList}>
+            <ScrollView style={CommonStyles.Background_Standard}>
                 {loading && <Loading />}
                 {!loading && recipes.filter(recipe => {
                     if (filter === "") return true;
@@ -66,15 +66,6 @@ export function RecipesPage(props: RecipesPageProps): ReactElement {
                         ingredients={recipe.ingredients} /> 
                 ))}
             </ScrollView>
-            <HeaderMenu showing={headerMenuShowing} options={[
-                {name: 'Add New Recipe', onPress: () => console.log("Pressipe")}
-            ]} />
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    recipesList: {
-        backgroundColor: Colors.Background
-    }
-});

@@ -26,8 +26,6 @@ export function ShoppingListPage(props: ShoppingListPageProps): ReactElement {
     const [loading, setLoading] = useState(true);
     // The shopping items data
     const [shoppingItems, setShoppingItems] = useState<ShoppingItem[]>([]);
-    // Whether or not the header menu is showing
-    const [headerMenuShowing, setHeaderMenuShowing] = useState(false);
 
     // Fetch the data
     useEffect(() => {
@@ -36,10 +34,10 @@ export function ShoppingListPage(props: ShoppingListPageProps): ReactElement {
 
     // Set the menu options
     useEffect(() => {
-        FormatHeader(props.navigation, 'SHOPPING', setHeaderMenuShowing);
+        FormatHeader(props.navigation, 'SHOPPING', [
+            {name: 'Uncheck all items', onPress: () => console.log("Uncheck all")}
+        ]);
     }, [props.navigation])
-
-    if (loading) return <Loading />
 
     return (
         <>
@@ -62,9 +60,6 @@ export function ShoppingListPage(props: ShoppingListPageProps): ReactElement {
                         units={shoppingItem.units} /> 
                 ))}
             </ScrollView>
-            <HeaderMenu showing={headerMenuShowing} options={[
-                {name: 'Clear All', onPress: () => console.log("Cleared")}
-            ]} />
         </>
     )
 }

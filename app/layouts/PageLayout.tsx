@@ -10,8 +10,8 @@ export interface PageLayout {
 export function PageLayout(props: PageLayout) {
     return (
         <View style={[
-            CommonStyles.StandardBackground,
-            CommonStyles.WideMargin
+            CommonStyles.Background_Standard,
+            CommonStyles.Margin_Wide
         ]}>
             {props.children}
         </View>

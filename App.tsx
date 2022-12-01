@@ -5,6 +5,7 @@ import { ItemDetailsPage } from './app/pages/ItemDetailsPage';
 import { Home } from './app/pages/Home';
 import { RecipeDetailsPage } from './app/pages/RecipeDetailsPage';
 import { Colors } from './app/constants/Colors';
+import { OverflowMenuProvider } from 'react-navigation-header-buttons';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export type RootStackParamList = {
 export default function App() {
   return (
     <NavigationContainer>
+      <OverflowMenuProvider>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
@@ -55,6 +57,7 @@ export default function App() {
             }}
           />
         </Stack.Navigator>
+      </OverflowMenuProvider>
     </NavigationContainer>
   );
 }

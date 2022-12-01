@@ -36,7 +36,7 @@ export function ItemDetailsPage(props: ItemDetailsPageProps): ReactElement {
 
     return (
         <PageLayout>
-            <View style={CommonStyles.WideMargin}>
+            <View style={CommonStyles.Margin_Wide}>
                 <Text style={styles.title}>{item.name}</Text>
                 <Text style={styles.sublabel}>{item.quantity} {item.units}</Text>
                 {item.expiration && 
