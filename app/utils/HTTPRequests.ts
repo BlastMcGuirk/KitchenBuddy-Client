@@ -21,3 +21,29 @@ export function GET<T>(
             setLoading(false);
         });
 }
+
+/**
+ * Function to help POST data and return the result
+ * @param endpoint The URL endpoint
+ * @param data The data being submitted
+ * @param callback Callback for the response
+ */
+export function POST(
+    endpoint: string,
+    data: any,
+    callback: (res: any) => void)
+{
+    console.log("POST: " + endpoint);
+    fetch(URL + endpoint, {
+        method: 'POST', 
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(res => res.json())
+        .then(data => {
+            callback(data);
+        })
+}

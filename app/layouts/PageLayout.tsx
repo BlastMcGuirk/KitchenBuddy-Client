@@ -1,13 +1,19 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, View } from 'react-native';
-import { Colors } from '../constants/Colors';
+import { View } from 'react-native';
 import { CommonStyles } from '../styles/CommonStyles';
 
-export interface PageLayout {
-    children: ReactElement | ReactElement[];
+// Props for the page layout layout
+export interface PageLayoutProps {
+    children: ReactElement | (ReactElement | null)[];
 }
 
-export function PageLayout(props: PageLayout) {
+/**
+ * A layout so that all pages look generally the same
+ * 
+ * @param props Props for the page layout layout
+ * @returns A standard page layout
+ */
+export function PageLayout(props: PageLayoutProps) {
     return (
         <View style={[
             CommonStyles.Background_Standard,
@@ -17,10 +23,3 @@ export function PageLayout(props: PageLayout) {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Colors.Background
-    }
-});

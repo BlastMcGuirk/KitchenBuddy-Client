@@ -35,34 +35,32 @@ export function RecipeDetailsPage({ route, navigation }: RecipeDetailsPageProps)
 
     return (
         <PageLayout>
-            <View style={CommonStyles.Margin_Standard}>
-                <Text style={styles.title}>{recipe.name}</Text>
-                <Text style={styles.sublabel}>{recipe.description}</Text>
-                <View style={styles.row}>
-                    <Text style={styles.sublabel}>Prep: {recipe.prepTime}</Text>
-                    <Text style={[styles.sublabel, styles.leftPadding]}>Cook: {recipe.cookTime}</Text>
-                </View>
-                <View style={styles.ingredientsView}>
-                    <Text style={styles.ingredient}>Ingredients:</Text>
-                    {recipe.ingredients?.map(ingredient => {
-                        return(
-                            <View style={[styles.row, styles.leftPadding]} key={ingredient.id}>
-                                <Text style={styles.ingredientName}>{ingredient.name}</Text>
-                                <Text style={styles.ingredientQuantity}>{ingredient.quantity} {ingredient.units}</Text>
-                            </View>
-                        )
-                    })}
-                </View>
-                <View style={styles.ingredientsView}>
-                    <Text style={styles.ingredient}>Instructions:</Text>
-                    {recipe.instructions.split("\n").map((instruction, i) => {
-                        return (
-                            <View style={[styles.row, styles.leftPadding]} key={i}>
-                                <Text style={styles.ingredientName}>{(i + 1) + ")"} {instruction}</Text>
-                            </View>
-                        )
-                    })}
-                </View>
+            <Text style={styles.title}>{recipe.name}</Text>
+            <Text style={styles.sublabel}>{recipe.description}</Text>
+            <View style={styles.row}>
+                <Text style={styles.sublabel}>Prep: {recipe.prepTime}</Text>
+                <Text style={[styles.sublabel, styles.leftPadding]}>Cook: {recipe.cookTime}</Text>
+            </View>
+            <View style={styles.ingredientsView}>
+                <Text style={styles.ingredient}>Ingredients:</Text>
+                {recipe.ingredients?.map(ingredient => {
+                    return(
+                        <View style={[styles.row, styles.leftPadding]} key={ingredient.id}>
+                            <Text style={styles.ingredientName}>{ingredient.name}</Text>
+                            <Text style={styles.ingredientQuantity}>{ingredient.quantity} {ingredient.units}</Text>
+                        </View>
+                    )
+                })}
+            </View>
+            <View style={styles.ingredientsView}>
+                <Text style={styles.ingredient}>Instructions:</Text>
+                {recipe.instructions.split("\n").map((instruction, i) => {
+                    return (
+                        <View style={[styles.row, styles.leftPadding]} key={i}>
+                            <Text style={styles.ingredientName}>{(i + 1) + ")"} {instruction}</Text>
+                        </View>
+                    )
+                })}
             </View>
         </PageLayout>
     )

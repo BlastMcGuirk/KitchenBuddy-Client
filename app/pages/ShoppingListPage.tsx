@@ -3,7 +3,6 @@ import CheckBox from 'expo-checkbox';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { RootStackParamList } from '../../App';
-import { HeaderMenu } from '../components/HeaderMenu';
 import { Loading } from '../components/Loading';
 import { ShoppingListListItem } from '../components/ShoppingListListItem';
 import { Colors } from '../constants/Colors';

@@ -34,7 +34,7 @@ export function PantryPage(props: PantryPageProps): ReactElement {
     // Set the header
     useEffect(() => {
         FormatHeader(props.navigation, 'PANTRY', [
-            {name: 'Add New Item', onPress: () => console.log("Adding new item")}
+            {name: 'Add New Item', onPress: () => props.navigation.navigate("NewItemPage")}
         ]);
     }, [props.navigation])
 

@@ -10,7 +10,6 @@ import { MonthYear } from '../utils/DateFormatter';
 import { Loading } from '../components/Loading';
 import { NotFound } from '../components/NotFound';
 import { GET } from '../utils/HTTPRequests';
-import { CommonStyles } from '../styles/CommonStyles';
 
 // Get props from the stack nav props
 type ItemDetailsPageProps = NativeStackScreenProps<RootStackParamList, 'ItemDetailsPage'>;
@@ -36,13 +35,11 @@ export function ItemDetailsPage(props: ItemDetailsPageProps): ReactElement {
 
     return (
         <PageLayout>
-            <View style={CommonStyles.Margin_Wide}>
-                <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.sublabel}>{item.quantity} {item.units}</Text>
-                {item.expiration && 
-                    <Text style={styles.sublabel}>Exp {MonthYear(item.expiration)}</Text>
-                }
-            </View>
+            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.sublabel}>{item.quantity} {item.units}</Text>
+            {item.expiration && 
+                <Text style={styles.sublabel}>Exp {MonthYear(item.expiration)}</Text>
+            }
         </PageLayout>
     )
 }

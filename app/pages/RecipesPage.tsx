@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { ReactElement, useEffect, useState } from 'react'
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 import { SearchBar } from '@rneui/themed';
 import { RootStackParamList } from '../../App';
 import { RecipeListItem } from '../components/RecipeListItem';

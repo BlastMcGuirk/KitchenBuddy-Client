@@ -6,6 +6,7 @@ import { Home } from './app/pages/Home';
 import { RecipeDetailsPage } from './app/pages/RecipeDetailsPage';
 import { Colors } from './app/constants/Colors';
 import { OverflowMenuProvider } from 'react-navigation-header-buttons';
+import { NewItemPage } from './app/pages/NewItemPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ export type RootStackParamList = {
   ShoppingListPage: undefined,
   ItemDetailsPage: {id: number},
   RecipeDetailsPage: {id: number},
+  NewItemPage: undefined,
   PantryListItem: undefined,
   RecipeListItem: undefined,
   ShoppingListListItem: undefined,
@@ -54,6 +56,14 @@ export default function App() {
             options={{
               headerShown: true,
               title: ''
+            }}
+          />
+          <Stack.Screen
+            name="NewItemPage"
+            component={NewItemPage}
+            options={{
+              headerShown: true,
+              title: 'New Item'
             }}
           />
         </Stack.Navigator>

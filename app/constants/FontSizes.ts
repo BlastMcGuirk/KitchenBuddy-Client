@@ -7,4 +7,10 @@ export const FontSizes = {
     Sublabel: 16,
     Menu: 20,
     Ingredients: 20,
+
+    XL: 30,
+    L: 24,
+    M: 20,
+    S: 16,
+    XS: 10,
 }
